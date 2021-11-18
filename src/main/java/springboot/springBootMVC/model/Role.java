@@ -1,17 +1,11 @@
 package springboot.springBootMVC.model;
 
-//import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
-
 import javax.persistence.*;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "roles")
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@Data
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

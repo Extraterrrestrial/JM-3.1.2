@@ -1,6 +1,6 @@
 package springboot.springBootMVC.model;
 
-import lombok.*;
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
@@ -9,8 +9,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@NoArgsConstructor
-@Data
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,6 +39,56 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "users_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id"))
     private Set<Role> roles;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setUsername(@NonNull String username) {
+        this.username = username;
+    }
+
+    @NonNull
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(@NonNull String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setPassword(@NonNull String password) {
+        this.password = password;
+    }
+
+    public byte getAge() {
+        return age;
+    }
+
+    public void setAge(byte age) {
+        this.age = age;
+    }
+
+    @NonNull
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(@NonNull String email) {
+        this.email = email;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
     @Override
     public String getUsername() {

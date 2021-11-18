@@ -35,8 +35,8 @@ public class User implements UserDetails {
 //    @ManyToMany(fetch = FetchType.EAGER)
 //    private Set<Role> roles;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-//    @ManyToMany(fetch = FetchType.EAGER)
+//    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "users_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id"))

@@ -5,19 +5,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import springboot.springBootMVC.dao.UserRepository;
+import springboot.springBootMVC.dao.UserDAO;
 import springboot.springBootMVC.model.User;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+    private final UserDAO userDAO;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserServiceImpl(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
     @Bean
@@ -27,30 +28,30 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userDAO.findAll();
     }
 
     @Override
     public void save(User user) {
         user.setPassword(bCrypt().encode(user.getPassword()));
-        userRepository.save(user);
+        userDAO.save(user);
     }
 
     @Override
     public void delete(User user) {
-        userRepository.delete(user);
+        userDAO.delete(user);
     }
 
     @Override
     public void edit(User user) {
         user.setPassword(bCrypt().encode(user.getPassword()));
-        userRepository.save(user);
+        userDAO.save(user);
     }
 
     @Override
     public User getById(long id) {
         User user = null;
-        Optional<User> opt = userRepository.findById(id);
+        Optional<User> opt = userDAO.findById(id);
         if (opt.isPresent()) {
             user = opt.get();
         }
@@ -59,18 +60,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getByName(String name) throws NotFoundException {
-        User user = userRepository.findByUsername(name);
+        User user = userDAO.findByUsername(name);
         if (user == null) {
             throw new NotFoundException(name);
         }
         return user;
     }
+
     @Override
     public User getByEmail(String email) throws NotFoundException {
-        User user = userRepository.findByEmail(email);
+        User user = userDAO.findByEmail(email);
         if (user == null) {
             throw new NotFoundException(email);
         }
         return user;
     }
+
 }

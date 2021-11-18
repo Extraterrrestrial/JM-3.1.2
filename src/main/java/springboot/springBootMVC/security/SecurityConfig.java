@@ -21,15 +21,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                       UserDetailsService userDetailsService, SuccessUserHandler successUserHandler) {
         this.userDetailsService = userDetailsService;
         this.successUserHandler = successUserHandler;
+        System.out.println("SecurityConfig - конструктор -> SecurityConfig: userDetailsService=" + userDetailsService + " successUserHandler=" + successUserHandler);
     }
 
         @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(12);
+            System.out.println("UsersController - passwordEncoder()");
+            return new BCryptPasswordEncoder(12);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        System.out.println("UsersController - configure(HttpSecurity http)");
         http.authorizeRequests()
                 .antMatchers("/", "/user")
                 .hasAnyRole("ADMIN, USER")
@@ -52,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // конфигурация для прохождения аутентификации
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        System.out.println("UsersController - configure(AuthenticationManagerBuilder auth)");
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 }

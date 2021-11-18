@@ -25,15 +25,18 @@ public class UsersController {
     public UsersController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
+        System.out.println("UsersController - конструктор -> UsersController: userService=" + userService + " roleService=" + roleService);
     }
 
     @GetMapping("login")
     public String log() {
+        System.out.println("UsersController - log()");
         return "login";
     }
 
     @GetMapping("admin")
     public String getAllUsers(Model model, @AuthenticationPrincipal User user) {
+        System.out.println("UsersController - getAllUsers");
         model.addAttribute("listRoles", roleService.getAllRoles());
         model.addAttribute("listUser", userService.getAllUsers());
         model.addAttribute("user", user);
@@ -42,6 +45,7 @@ public class UsersController {
 
     @GetMapping("user")
     public String infoUser(@AuthenticationPrincipal User user, ModelMap model) {
+        System.out.println("UsersController - infoUser");
         model.addAttribute("user", user);
         model.addAttribute("roles", user.getRoles());
         return "userPage";
@@ -49,6 +53,7 @@ public class UsersController {
 
     @GetMapping(value = "admin/new")
     public String newUser(ModelMap model) {
+        System.out.println("UsersController - newUser(ModelMap model)");
         model.addAttribute("user", new User());
         model.addAttribute("roles", roleService.getAllRoles());
         return "createNew";
@@ -57,6 +62,7 @@ public class UsersController {
     @PostMapping(value = "admin/new")
     public String newUser(@ModelAttribute User user,
                           @RequestParam(value = "roless") String[] role) throws NotFoundException {
+        System.out.println("UsersController - newUser(@ModelAttribute User user, @RequestParam(value = \"roless\") String[] role)");
         Set<Role> rolesSet = new HashSet<>();
         for (String roles : role) {
             rolesSet.add(roleService.getByName(roles));
@@ -76,6 +82,7 @@ public class UsersController {
     @PostMapping(value = "admin/{id}")
     public String editUser(@ModelAttribute User user,
                            @RequestParam(value = "roless") String[] role) throws NotFoundException {
+        System.out.println("UsersController - editUser)");
         Set<Role> rolesSet = new HashSet<>();
         for (String roles : role) {
             rolesSet.add((roleService.getByName(roles)));
@@ -87,6 +94,7 @@ public class UsersController {
 
     @PostMapping(value = "admin/{id}/del")
     public String deleteUser(@PathVariable("id") long id) {
+        System.out.println("UsersController - deleteUser)");
         User user = userService.getById(id);
         userService.delete(user);
         return "redirect:/admin";

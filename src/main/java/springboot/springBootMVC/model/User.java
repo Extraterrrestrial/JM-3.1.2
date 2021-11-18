@@ -1,8 +1,6 @@
 package springboot.springBootMVC.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
@@ -32,7 +30,16 @@ public class User implements UserDetails {
     @NonNull
     @Column(name = "email")
     private String email;
-    @ManyToMany(fetch = FetchType.EAGER)
+
+
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    private Set<Role> roles;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+//    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "users_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id"))
     private Set<Role> roles;
 
     @Override

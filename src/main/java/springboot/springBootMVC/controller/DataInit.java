@@ -22,9 +22,6 @@ public class DataInit {
     @Autowired
     private RoleService roleService;
 
-    private Set<Role> roles1;
-    private Set<Role> roles2;
-
     @PostConstruct
     public void dataInit() throws NotFoundException {
         System.out.println("DataInit - dataInit");
@@ -51,20 +48,6 @@ public class DataInit {
             user1.setPassword("admin");
             user1.setRoles(rolesSet);
             userService.save(user1);
-
         }
-
-//        roleService.add(new Role("ROLE_ADMIN"));
-//        roleService.add(new Role("ROLE_USER"));
-//
-//        User user1 = new User();
-//        user1.setUsername("admin");
-//        user1.setLastname("admin");
-//        user1.setEmail("admin@mail");
-//        user1.setPassword("1234");
-//        user1.setRoles(Set.of(roleService.getByName("ROLE_ADMIN"),
-//                roleService.getByName("ROLE_USER"));
-//        userService.save(user1);
-
     }
 }
